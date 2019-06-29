@@ -1,5 +1,6 @@
 const express = require('express');
 const VideoModel = require('../../models/video.model');
+const PlaylistModel = require('../../models/playlist.model');
 
 const router = express.Router();
 
@@ -36,9 +37,16 @@ router.delete('/:id', (req, res) => {
 
     VideoModel.findOne({
         _id: req.params.id
-    }, function (error, video) {
-        res.send("The video has been deleted");
-        video.remove();
+    }, (err, video) => {
+            if (err)
+                throw err;
+
+            PlaylistModel.update({}, { $pull: { videos: { $in: video._id } } }, (err) => {
+                if (err)
+                    throw err;
+                video.remove();
+                res.send('The video has been deleted.')
+        });
     });
 });
 
