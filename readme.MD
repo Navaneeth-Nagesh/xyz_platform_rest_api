@@ -14,6 +14,14 @@ For production environment...
 $ npm start
 ```
 
+##### Mongodb Setup :
+
+Create a database called 'xyz' and connect through the following url given below.
+
+```sh
+    mongodb://127.0.0.1/xyz
+```
+
 ### API
 
 ##### Videos :
